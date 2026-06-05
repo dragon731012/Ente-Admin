@@ -50,12 +50,27 @@ try {
     <p class="user-email txt">
         <?php echo htmlspecialchars($user["email"]); ?>
     </p>
-    <img class="user-edit" src="edit.png"/>
-    <p class="user-id txt">
-        <?php echo htmlspecialchars($user["id"]); ?>
-    </p>
+    <img class="user-edit" src="edit.png" onclick="submitPost('manage.php',{id: '<?php echo urlencode($user['id']); ?>'});"/>
 </div>
 <button id="logout" onclick="window.location='logout.php';">Log out</button>
+<script>
+    function submitPost(url, data) {
+        const f = document.createElement('form');
+        f.method = 'POST';
+        f.action = url;
+        for (const key in data) {
+            if (data.hasOwnProperty(key)) {
+                const inp = document.createElement('input');
+                inp.type = 'hidden';
+                inp.name = key;
+                inp.value = data[key];
+                f.appendChild(inp);
+            }
+        }
+        document.body.appendChild(f);
+        f.submit();
+    }
+</script>
 
 <?php endforeach; ?>
 

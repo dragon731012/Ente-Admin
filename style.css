@@ -9,11 +9,17 @@ body {
 
 #logout {
     position: absolute;
-    top:1vh;
-    left:1vh;
+    top: 1vh;
+    left: 1vh;
     background: #1db954;
     border: 0px;
     color: white;
+    font-size: 2vh;
+    padding: 1vh;
+    font-family: "Inter Variable", sans-serif;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
 }
 
 .user-cont {
@@ -34,6 +40,8 @@ body {
     font-family: "Inter Variable", sans-serif;
     font-weight: 900;
     font-size: 4vh;
+    margin-top: 7vh;
+    margin-bottom: 4vh;
 }
 
 .txt {
@@ -46,4 +54,5 @@ body {
 .user-edit {
     filter: invert(100%);
     height: 3vh;
+    cursor: pointer;
 }

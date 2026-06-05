@@ -27,6 +27,26 @@ function updateUserStorage($id, $gb) {
     }
 }
 
+function getUserStorage($id) {
+    try {
+        $db = getConnection();
+        $d = $db->prepare("SELECT storage FROM subscriptions WHERE user_id = :user_id");
+        $d->execute([':user_id' => $id]);
+        
+        $row = $d->fetch(PDO::FETCH_ASSOC);
+        
+        if ($row && isset($row['storage'])) {
+            $bytes = (float)$row['storage'];
+            $gb = $bytes / (1024 * 1024 * 1024);
+            return round($gb, 2);
+        }
+        return 0;
+    } catch (Exception $e) {
+        error_log("Error: " . $e->getMessage());
+        return false;
+    }
+}
+
 function updateUserExpiry($id, $t) {
     try {
         $db = getConnection();
