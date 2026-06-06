@@ -39,10 +39,10 @@ try {
 }
 ?>
 
-<?php foreach ($users as $user):?>
-
 <div class="title">User Management</div>
 
+<?php foreach ($users as $user):?>
+    
 <div class="user-cont">
     <p class="user-identifier txt">
         <?php if (htmlspecialchars($user["admin"])==1) echo "Admin" ?>
