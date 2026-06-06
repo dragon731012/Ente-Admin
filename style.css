@@ -7,10 +7,36 @@ body {
     align-items: center;
 }
 
-#logout {
+.panel-button {
+    border-left: 4px solid green !important;
+    padding-left: 1vh;
+    background: transparent;
+    border: 0px;
+    opacity: 1;
+    color: white;
+    text-align: left;
+    margin-top: 3vh;
+}
+
+button {
+    opacity: 0;
+}
+
+#panel-cont {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    height: 90vh;
+    width: 20vw;
+}
+
+/*#logout {
     position: absolute;
     top: 1vh;
     left: 1vh;
+    opacity: 1;
     background: #1db954;
     border: 0px;
     color: white;
@@ -20,7 +46,7 @@ body {
     font-weight: 600;
     border-radius: 10px;
     cursor: pointer;
-}
+}*/
 
 .user-cont {
     border-top: white 3px;
@@ -44,10 +70,13 @@ body {
     margin-bottom: 4vh;
 }
 
+.user-cont, .user-email {
+    margin-left: 1vw;
+}
+
 .txt {
     font-family: "Inter Variable", sans-serif;
     font-weight: 600;
-    margin-left: 1vw;
     font-size: 2vh;
 }
 
@@ -65,4 +94,9 @@ body {
 
 .code-time {
     font-size: 1.3vh;
+}
+
+.panel-button.selected{
+    border-left: 8px solid green !important;
+    padding-left: 1.5vh;
 }

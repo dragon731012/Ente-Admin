@@ -42,7 +42,7 @@ try {
 <div class="title">User Management</div>
 
 <?php foreach ($users as $user):?>
-    
+
 <div class="user-cont">
     <p class="user-identifier txt">
         <?php if (htmlspecialchars($user["admin"])==1) echo "Admin" ?>
@@ -52,7 +52,6 @@ try {
     </p>
     <img class="user-edit" src="edit.png" onclick="submitPost('manage.php',{id: '<?php echo urlencode($user['id']); ?>'});"/>
 </div>
-<button id="logout" onclick="window.location='logout.php';">Log out</button>
 <script>
     function submitPost(url, data) {
         const f = document.createElement('form');
@@ -75,3 +74,16 @@ try {
 <?php endforeach; ?>
 
 <link rel="stylesheet" href="style.css">
+
+<div id="panel-cont">
+    <button class="panel-button txt" id="users" onclick="window.location='index.php';">Users</button>
+    <button class="panel-button txt" id="otps" onclick="window.location='otp.php';">OTPs</button>
+    <button class="panel-button txt" id="logout" onclick="window.location='logout.php';">Log out</button>
+</div>
+<script>
+    if (window.location.href.includes("otp")){
+        document.getElementById("otps").className="panel-button txt selected";
+    } else {
+        document.getElementById("users").className="panel-button txt selected";
+    }
+</script>

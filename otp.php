@@ -51,3 +51,16 @@ echo "<div style='padding-top: 5vh;'>".getOTPs()."</div>";
 ?>
 
 <link rel="stylesheet" href="style.css">
+
+<div id="panel-cont">
+    <button class="panel-button txt" id="users" onclick="window.location='index.php';">Users</button>
+    <button class="panel-button txt" id="otps" onclick="window.location='otp.php';">OTPs</button>
+    <button class="panel-button txt" id="logout" onclick="window.location='logout.php';">Log out</button>
+</div>
+<script>
+    if (window.location.href.includes("otp")){
+        document.getElementById("otps").className="panel-button txt selected";
+    } else {
+        document.getElementById("users").className="panel-button txt selected";
+    }
+</script>
