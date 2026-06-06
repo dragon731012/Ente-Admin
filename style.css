@@ -100,3 +100,48 @@ button {
     border-left: 8px solid green !important;
     padding-left: 1.5vh;
 }
+
+.login-cont {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.login-inner-cont {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.login-button {
+  background: #1db954;
+  border: 0px;
+  color: white;
+  font-size: 2vh;
+  padding: 1vh;
+  font-family: "Inter Variable", sans-serif;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  opacity: 1;
+  margin-top: 2vh;
+  padding-left: 2vw;
+  padding-right: 2vw;
+}
+.login-label {
+  display: none;
+}
+.login-input {
+  background: #373737;
+  border: 0px;
+  margin-bottom: 3vh;
+  height: 5vh;
+  width: 50vw;
+  border-radius: 5px;
+  outline: none;
+  color: white;
+  font-size: 2vh;
+  padding-left: 1vw;
+}
