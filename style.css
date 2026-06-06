@@ -56,3 +56,13 @@ body {
     height: 3vh;
     cursor: pointer;
 }
+
+.code-cont {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.code-time {
+    font-size: 1.3vh;
+}

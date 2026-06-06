@@ -47,5 +47,7 @@ function getOTPs() {
     return "<div class='txt'>None found.</div>";
 }
 
-echo getOTPs();
+echo "<div style='padding-top: 5vh;'>".getOTPs()."</div>";
 ?>
+
+<link rel="stylesheet" href="style.css">
