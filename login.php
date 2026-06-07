@@ -1,16 +1,38 @@
 <?php
+session_set_cookie_params([
+    'lifetime' => 0,
+    'httponly' => true,
+    'secure'   => true,
+    'samesite' => 'Strict'
+]);
+
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (($_SESSION["failed_attempts"] ?? 0) >= 5) {
+        $wait = 300;
+        if (time() - $_SESSION["last_failed"] < $wait) {
+            die("Too many attempts.");
+        } else {
+            $_SESSION["failed_attempts"] = 0;
+        }
+    }
+    
     $user = strtolower(trim($_POST['user'] ?? ''));
     $password = trim($_POST['password'] ?? '');
 
     if ($user == getenv("ADMIN_USER") && $password == getenv("ADMIN_PASSWORD")){
+        session_regenerate_id(true);
+
         $_SESSION['admin_logged_in'] = true;
         $_SESSION['admin_user'] = $user;
+        $_SESSION["failed_attempts"] = 0;
         
         header("Location: index.php");
         exit;
+    } else {
+        $_SESSION["failed_attempts"] = ($_SESSION["failed_attempts"] ?? 0) + 1;
+        $_SESSION["last_failed"] = time();
     }
 }
 ?>
