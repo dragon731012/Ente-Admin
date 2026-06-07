@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById("users")?.addEventListener("click", () => window.location='index.php');
+    document.getElementById("dash")?.addEventListener("click", () => window.location='index.php');
+    document.getElementById("users")?.addEventListener("click", () => window.location='users.php');
     document.getElementById("otps")?.addEventListener("click", () => window.location='otp.php');
     document.getElementById("logout")?.addEventListener("click", () => window.location='logout.php');
 
@@ -26,8 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    if (window.location.href.includes("otp")){
+    if (window.location.pathname.includes("otp")){
         document.getElementById("otps").className="panel-button txt selected";
+    } else if (window.location.pathname.includes("index") || window.location.pathname=="/"){
+        document.getElementById("dash").className="panel-button txt selected";
     } else if (!window.location.pathname.includes("manage")) {
         document.getElementById("users").className="panel-button txt selected";
     }

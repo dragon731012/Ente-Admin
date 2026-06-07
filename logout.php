@@ -1,9 +1,12 @@
 <?php
+
+$is_secure = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') || (isset($_SERVER['HTTP_CF_VISITOR']) && strpos($_SERVER['HTTP_CF_VISITOR'], 'https') !== false);
+
 session_set_cookie_params([
     'lifetime' => 0,
     'httponly' => true,
-    'secure'   => false,
-    'samesite' => 'Strict'
+    'secure'   => $is_secure,
+    'samesite' => 'Lax'
 ]);
 
 session_start();
