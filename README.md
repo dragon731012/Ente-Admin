@@ -1,4 +1,4 @@
-# Ente Admin Ui
+# Ente Admin UI
 ![Screenshot](ss.png)
 ## Installation
 Before using this, you must have Ente set up and selfhosted. [Ente quickstart](https://ente.com/help/self-hosting/)
