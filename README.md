@@ -13,14 +13,15 @@ First, you must edit the `compose.yaml` with your preferred editor. Scroll to th
       DB_HOST: postgress # Database host here, quickstart uses postgres
       DB_NAME: ente_db # Database name here, quickstart uses ente_db
       DB_USER: pguser # Database username here, quickstart uses pguser
-      DB_PASSWORD: # Database password here, required
-      ENTE_ENCRYPTION_KEY: # The encryption key in museum.yaml, only used to decrypt the emails
-      ADMINS: # Your admin user ids, only to display the user as an admin on the ui - multiple ids may be separated by commas
-      ADMIN_PASSWORD: # The password set for the admin panel
-      ADMIN_USER: # The username set for the admin panel
+      DB_PASSWORD: 12345abcdef # Database password here, required
+      ENTE_ENCRYPTION_KEY: abcdefg987654321 # The encryption key in museum.yaml, only used to decrypt the emails
+      ADMINS: 123456789,987654321 # Your admin user ids, only to display the user as an admin on the ui - multiple ids may be separated by commas
+      ADMIN_PASSWORD: securepassword # The password set for the admin panel
+      ADMIN_USER: john # The username set for the admin panel
     depends_on:
       - postgres
 ```
+Please edit the values for your setup and be sure they are correct.
 
 Next, we are going to set up the verification code catcher. You can skip this if you want. Open the `museum.yaml` with any editor and add this to the very bottom:
 ```yaml
