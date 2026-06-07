@@ -50,10 +50,13 @@ function getUserStorage($id) {
 function updateUserExpiry($id, $t) {
     try {
         $db = getConnection();
+
+        $seconds = strtotime($t);
+        $microseconds = $seconds * 1000000;
         
         $d = $db->prepare("UPDATE subscriptions SET expiry_time = :expiry_time WHERE user_id = :user_id");
         $d->execute([
-            ':expiry_time' => $t,
+            ':expiry_time' => $microseconds,
             ':user_id' => $id
         ]);
 
@@ -61,6 +64,27 @@ function updateUserExpiry($id, $t) {
     } catch (Exception $e) {
         error_log("Error: " . $e->getMessage());
         return false;
+    }
+}
+
+function getUserExpiry($id) {
+    try {
+        $db = getConnection();
+        $d = $db->prepare("SELECT expiry_time FROM subscriptions WHERE user_id = :user_id");
+        $d->execute([':user_id' => $id]);
+        
+        $row = $d->fetch(PDO::FETCH_ASSOC);
+        
+        if ($row && isset($row['expiry_time'])) {
+            $rawtime = $row['expiry_time'];
+            $seconds = $rawtime / 1000000;
+            $date = date('Y-m-d', $seconds);
+            return $date;
+        }
+        return "2000-01-01";
+    } catch (Exception $e) {
+        error_log("Error: " . $e->getMessage());
+        return "2000-01-01";
     }
 }
 ?>

@@ -29,11 +29,17 @@ if ($json) {
 }
 ?>
 <link rel="stylesheet" href="style.css">
-<p class="txt"><?php echo $_POST["id"]; ?></p>
-<div class="cont">
-    <input type="text" id="storage" placeholder="<?php echo htmlspecialchars(getUserStorage($userId)); ?> GB"/>
-    <button onclick="sendPost('manage.php', {id: '<?php echo htmlspecialchars($userId); ?>', storage: document.getElementById('storage').value})">Save</button>
+<div class="title">Manage - <?php echo urldecode(htmlspecialchars($_POST["email"])); ?></div>
+<p class="txt">User ID - <?php echo $_POST["id"]; ?></p>
+<div class="cont txt">
+    Max storage - 
+    <input type="text" class="manage-input" id="storage" placeholder="<?php echo htmlspecialchars(getUserStorage($userId)); ?> GB"/>
+    <button class="manage-button" onclick="sendPost('manage.php', {id: '<?php echo htmlspecialchars($userId); ?>', storage: document.getElementById('storage').value})">Save</button>
 </div>
+<div class="cont txt">
+    Expiry - 
+    <input type="date" id="expiry" class="expiry-input" value="<?php echo htmlspecialchars(getUserExpiry($userId)); ?>"/>
+    <button class="manage-button" onclick="sendPost('manage.php', {id: '<?php echo htmlspecialchars($userId); ?>', expiry: document.getElementById('expiry').value})">Save</button>
 <script>
 async function sendPost(url, data){
     try {
@@ -49,11 +55,26 @@ async function sendPost(url, data){
         
         if (result.status === "success") {
             alert(result.message);
-            document.getElementById('storage').placeholder = data.storage + " GB";
-            document.getElementById('storage').value = "";
+            if (data.storage) {
+                document.getElementById('storage').placeholder = data.storage + " GB";
+                document.getElementById('storage').value = "";
+            }
         }
     } catch (error) {
         console.error("Error updating user data:", error);
     }
 }
+</script>
+
+<div id="panel-cont">
+    <button class="panel-button txt" id="users" onclick="window.location='index.php';">Users</button>
+    <button class="panel-button txt" id="otps" onclick="window.location='otp.php';">OTPs</button>
+    <button class="panel-button txt" id="logout" onclick="window.location='logout.php';">Log out</button>
+</div>
+<script>
+    if (window.location.pathname.includes("otp")){
+        document.getElementById("otps").className="panel-button txt selected";
+    } else if (!window.location.pathname.includes("manage")) {
+        document.getElementById("users").className="panel-button txt selected";
+    }
 </script>

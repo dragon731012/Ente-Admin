@@ -50,7 +50,7 @@ try {
     <p class="user-email txt">
         <?php echo htmlspecialchars($user["email"]); ?>
     </p>
-    <img class="user-edit" src="edit.png" onclick="submitPost('manage.php',{id: '<?php echo urlencode($user['id']); ?>'});"/>
+    <img class="user-edit" src="edit.png" onclick="submitPost('manage.php',{id: '<?php echo urlencode($user['id']); ?>', email: '<?php echo urlencode($user['email']); ?>'});"/>
 </div>
 <script>
     function submitPost(url, data) {
