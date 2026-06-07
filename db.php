@@ -5,7 +5,10 @@ function getConnection(){
     $user = getenv("DB_USER");
     $password = getenv("DB_PASSWORD");
 
-    return new PDO("pgsql:host=$host;port=5432;dbname=$db", $user, $password, []);
+    return new PDO("pgsql:host=$host;port=5432;dbname=$db", $user, $password, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_EMULATE_PREPARES => false,
+    ]);
 }
 
 function updateUserStorage($id, $gb) {

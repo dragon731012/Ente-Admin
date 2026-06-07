@@ -2,7 +2,7 @@
 session_set_cookie_params([
     'lifetime' => 0,
     'httponly' => true,
-    'secure'   => true,
+    'secure'   => false,
     'samesite' => 'Strict'
 ]);
 
@@ -19,5 +19,5 @@ $_SESSION = [];
 session_destroy();
 setcookie(session_name(), '', time() - 3600, '/');
 header("Location: login.php");
-exit;exit;
+exit;
 ?>

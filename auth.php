@@ -1,9 +1,11 @@
 <?php
+require_once "headers.php";
+
 if (session_status() === PHP_SESSION_NONE) {
     session_set_cookie_params([
         'lifetime' => 0,
         'httponly' => true,
-        'secure'   => true,
+        'secure'   => false,
         'samesite' => 'Strict'
     ]);
 
@@ -28,5 +30,9 @@ function checkAdminSession() {
         }
     }
     $_SESSION['last_activity'] = time();
+
+    if (empty($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
 }
 ?>

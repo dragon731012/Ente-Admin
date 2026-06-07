@@ -39,6 +39,8 @@ try {
 }
 ?>
 
+<!DOCTYPE html>
+
 <div class="title">User Management</div>
 
 <?php foreach ($users as $user):?>
@@ -50,40 +52,18 @@ try {
     <p class="user-email txt">
         <?php echo htmlspecialchars($user["email"]); ?>
     </p>
-    <img class="user-edit" src="edit.png" onclick="submitPost('manage.php',{id: '<?php echo urlencode($user['id']); ?>', email: '<?php echo urlencode($user['email']); ?>'});"/>
+    <img class="user-edit" data-id="<?php echo urlencode($user['id']); ?>" data-email="<?php echo urlencode($user['email']); ?>" src="edit.png"/>
 </div>
-<script>
-    function submitPost(url, data) {
-        const f = document.createElement('form');
-        f.method = 'POST';
-        f.action = url;
-        for (const key in data) {
-            if (data.hasOwnProperty(key)) {
-                const inp = document.createElement('input');
-                inp.type = 'hidden';
-                inp.name = key;
-                inp.value = data[key];
-                f.appendChild(inp);
-            }
-        }
-        document.body.appendChild(f);
-        f.submit();
-    }
-</script>
 
 <?php endforeach; ?>
+
+<meta name="csrf-token" content="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
 
 <link rel="stylesheet" href="style.css">
 
 <div id="panel-cont">
-    <button class="panel-button txt" id="users" onclick="window.location='index.php';">Users</button>
-    <button class="panel-button txt" id="otps" onclick="window.location='otp.php';">OTPs</button>
-    <button class="panel-button txt" id="logout" onclick="window.location='logout.php';">Log out</button>
+    <button class="panel-button txt" id="users">Users</button>
+    <button class="panel-button txt" id="otps">OTPs</button>
+    <button class="panel-button txt" id="logout">Log out</button>
 </div>
-<script>
-    if (window.location.href.includes("otp")){
-        document.getElementById("otps").className="panel-button txt selected";
-    } else {
-        document.getElementById("users").className="panel-button txt selected";
-    }
-</script>
+<script src="app.js"></script>

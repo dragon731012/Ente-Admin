@@ -4,6 +4,17 @@ require_once "db.php";
 require_once "auth.php";
 checkAdminSession();
 
+$headers = getallheaders();
+$csrfHeader = $headers['X-CSRF-Token'] ?? '';
+$csrfPost = $_POST['csrf_token'] ?? '';
+$csrfValid = hash_equals($_SESSION['csrf_token'] ?? '', $csrfHeader ?: $csrfPost);
+
+if (!$csrfValid) {
+    http_response_code(403);
+    echo json_encode(["status" => "error", "message" => "Invalid request"]);
+    exit;
+}
+
 $json = json_decode(file_get_contents('php://input'), true);
 
 $userId = $_POST["id"] ?? $json["id"] ?? null;
@@ -15,6 +26,11 @@ if (!$userId){
 
 if ($json) {
     if (isset($json["storage"])){
+        if (!is_numeric($json["storage"]) || $json["storage"] < 0) {
+            http_response_code(400);
+            echo json_encode(["status" => "error", "message" => "Invalid value"]);
+            exit;
+        }
         updateUserStorage($userId, $json["storage"]);
         header('Content-Type: application/json');
         echo json_encode(["status" => "success", "message" => "Storage updated"]);
@@ -28,53 +44,28 @@ if ($json) {
     }
 }
 ?>
+
+<!DOCTYPE html>
+
+<meta name="csrf-token" content="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
+
 <link rel="stylesheet" href="style.css">
 <div class="title">Manage - <?php echo urldecode(htmlspecialchars($_POST["email"])); ?></div>
-<p class="txt">User ID - <?php echo $_POST["id"]; ?></p>
+<p class="txt">User ID - <?php echo htmlspecialchars($_POST["id"]); ?></p>
 <div class="cont txt">
     Max storage - 
     <input type="text" class="manage-input" id="storage" placeholder="<?php echo htmlspecialchars(getUserStorage($userId)); ?> GB"/>
-    <button class="manage-button" onclick="sendPost('manage.php', {id: '<?php echo htmlspecialchars($userId); ?>', storage: document.getElementById('storage').value})">Save</button>
+    <button class="manage-button" id="save-storage" data-id="<?php echo htmlspecialchars($userId); ?>">Save</button>
 </div>
 <div class="cont txt">
     Expiry - 
     <input type="date" id="expiry" class="expiry-input" value="<?php echo htmlspecialchars(getUserExpiry($userId)); ?>"/>
-    <button class="manage-button" onclick="sendPost('manage.php', {id: '<?php echo htmlspecialchars($userId); ?>', expiry: document.getElementById('expiry').value})">Save</button>
-<script>
-async function sendPost(url, data){
-    try {
-        const response = await fetch(url, { 
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-        
-        const result = await response.json();
-        
-        if (result.status === "success") {
-            alert(result.message);
-            if (data.storage) {
-                document.getElementById('storage').placeholder = data.storage + " GB";
-                document.getElementById('storage').value = "";
-            }
-        }
-    } catch (error) {
-        console.error("Error updating user data:", error);
-    }
-}
-</script>
+    <button class="manage-button" id="save-expiry" data-id="<?php echo htmlspecialchars($userId); ?>">Save</button>
+</div>
 
 <div id="panel-cont">
-    <button class="panel-button txt" id="users" onclick="window.location='index.php';">Users</button>
-    <button class="panel-button txt" id="otps" onclick="window.location='otp.php';">OTPs</button>
-    <button class="panel-button txt" id="logout" onclick="window.location='logout.php';">Log out</button>
+    <button class="panel-button txt" id="users">Users</button>
+    <button class="panel-button txt" id="otps">OTPs</button>
+    <button class="panel-button txt" id="logout">Log out</button>
 </div>
-<script>
-    if (window.location.pathname.includes("otp")){
-        document.getElementById("otps").className="panel-button txt selected";
-    } else if (!window.location.pathname.includes("manage")) {
-        document.getElementById("users").className="panel-button txt selected";
-    }
-</script>
+<script src="app.js"></script>

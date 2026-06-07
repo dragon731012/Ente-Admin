@@ -1,8 +1,10 @@
 <?php
+require_once "headers.php";
+
 session_set_cookie_params([
     'lifetime' => 0,
     'httponly' => true,
-    'secure'   => true,
+    'secure'   => false,
     'samesite' => 'Strict'
 ]);
 
@@ -36,6 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
+
+<!DOCTYPE html>
 
 <div class="title">Ente Admin Panel</div>
 
