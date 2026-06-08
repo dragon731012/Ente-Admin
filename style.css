@@ -70,6 +70,14 @@ button {
     margin-bottom: 4vh;
 }
 
+.small-title {
+    font-family: "Inter Variable", sans-serif;
+    font-weight: 900;
+    font-size: 2.5vh;
+    margin-top: 3vh;
+    margin-bottom: 1vh;
+}
+
 .user-cont, .user-email {
     margin-left: 1vw;
 }
@@ -182,4 +190,9 @@ button {
 
 #top{
     padding-top: 5vh;
+}
+
+.storage-bar{
+    height: 2vh;
+    background: white;
 }

@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById("otps")?.addEventListener("click", () => window.location='otp.php');
     document.getElementById("logout")?.addEventListener("click", () => window.location='logout.php');
 
+    if (document.getElementsByClassName("storage-bar")[0]) document.getElementsByClassName("storage-bar")[0].style="height: 2vh;background: white;width: calc(10vw * ("+document.getElementsByClassName("storage-bar")[0].dataset.percent+"));";
+
     document.getElementById("save-storage")?.addEventListener("click", () => {
         sendPost('manage.php', {
             id: document.getElementById("save-storage").dataset.id,
@@ -25,6 +27,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 email: img.dataset.email
             });
         });
+    });
+
+    document.querySelectorAll('.otp-timer').forEach(el => {
+        const expires = parseFloat(el.dataset.expires);
+        setInterval(() => {
+            const left = Math.round(expires - Date.now() / 1000);
+            el.textContent = left > 0 ? left + 's' : 'Expired';
+            if (left <= 0) el.closest('.user-cont').classList.add('expired');
+        }, 1000);
     });
 
     if (window.location.pathname.includes("otp")){
