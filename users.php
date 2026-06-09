@@ -50,7 +50,7 @@ try {
         <?php if (htmlspecialchars($user["admin"])==1) echo "Admin" ?>
     </p>
     <p class="user-email txt">
-        <?php echo htmlspecialchars($user["email"]); ?>
+        <?php echo htmlspecialchars($user["email"]); ?> - <?php echo htmlspecialchars(getUserUsage($user['id'])); ?> GB / <?php echo htmlspecialchars(getUserStorage($user['id'])); ?> GB
     </p>
     <img class="user-edit" data-id="<?php echo urlencode($user['id']); ?>" data-email="<?php echo urlencode($user['email']); ?>" src="edit.png"/>
 </div>

@@ -4,9 +4,12 @@ require_once "db.php";
 require_once "auth.php";
 checkAdminSession();
 
-$headers = getallheaders();
-$csrfHeader = $headers['X-CSRF-Token'] ?? '';
-$csrfPost = $_POST['csrf_token'] ?? '';
+$headers = array_change_key_case(getallheaders(), CASE_LOWER);
+
+$json = json_decode(file_get_contents('php://input'), true);
+
+$csrfHeader = $headers['x-csrf-token'] ?? '';
+$csrfPost = $_POST['csrf_token'] ?? $json['csrf_token'] ?? '';
 $csrfValid = hash_equals($_SESSION['csrf_token'] ?? '', $csrfHeader ?: $csrfPost);
 
 if (!$csrfValid) {
@@ -15,11 +18,14 @@ if (!$csrfValid) {
     exit;
 }
 
-$json = json_decode(file_get_contents('php://input'), true);
-
 $userId = $_POST["id"] ?? $json["id"] ?? null;
 
 if (!$userId){
+    if (isset($headers['x-requested-with']) || str_contains($headers['accept'] ?? '', 'application/json')) {
+        http_response_code(400);
+        echo json_encode(["status" => "error", "message" => "Missing User ID"]);
+        exit;
+    }
     header("Location: login.php");
     exit;
 }

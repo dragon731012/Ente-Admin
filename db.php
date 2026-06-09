@@ -50,6 +50,24 @@ function getUserStorage($id) {
     }
 }
 
+function getUserUsage($id) {
+    try {
+        $db = getConnection();
+        $d = $db->prepare("SELECT storage_consumed FROM usage WHERE user_id = :user_id");
+        $d->execute([':user_id' => $id]);
+        $row = $d->fetch(PDO::FETCH_ASSOC);
+        if ($row && isset($row['storage_consumed'])) {
+            $bytes = (float)$row['storage_consumed'];
+            $gb = $bytes / (1024 * 1024 * 1024);
+            return round($gb, 2);
+        }
+        return 0;
+    } catch (Exception $e) {
+        error_log("Error: " . $e->getMessage());
+        return false;
+    }
+}
+
 function updateUserExpiry($id, $t) {
     try {
         $db = getConnection();

@@ -44,7 +44,8 @@ class EnteMail:
             with open(otpfile, 'r') as f:
                 data = json.load(f)
                 return data if isinstance(data, list) else []
-        except Exception:
+        except Exception as e:
+            print("Error getting codes: ", e)
             return []
 
     def save_codes(self, code_list):
@@ -71,6 +72,6 @@ if __name__ == '__main__':
     controller = Controller(EnteMail(), hostname='0.0.0.0', port=port)
     controller.start()
     try:
-        asyncio.get_event_loop().run_forever()
+        asyncio.new_event_loop().run_forever()
     except KeyboardInterrupt:
         controller.stop()

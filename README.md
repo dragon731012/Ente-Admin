@@ -35,3 +35,10 @@ smtp:
   encryption: ""
 ```
 That's it! Your admin panel is set up! You can now simply access it at your configured port and log in with the details you set!
+
+
+## Motivation
+I built this project because I found that using the cli to manage user tiers and see verification codes is very inefficient. This project solved these problems.
+
+## AI policy
+As a porgrammer, I believe that AI is a tool to be used, not a replacement. When building this project, AI was used mostly for debugging and structuring, and was not a full hands-off process.
