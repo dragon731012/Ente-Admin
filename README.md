@@ -1,5 +1,14 @@
 # Ente Admin UI
 ![Screenshot](ss.png)
+
+## Features
+* Full user list
+* Easy access to verification codes
+* Quick user quota management
+* Easily change user subscription expiry dates
+* Intuitive dashboard that displays the total storage used
+* View each user's storage used and their quota easily
+  
 ## Installation
 Before using this, you must have Ente set up and selfhosted. [Ente quickstart](https://ente.com/help/self-hosting/)
 
